@@ -39,3 +39,6 @@ class AnalysisResult(BaseModel):
     default=None,
     description="Specific action recommendation when the match score is below 60"
 )
+    
+class HealthCheck(BaseModel):
+    status: str = "OK"
