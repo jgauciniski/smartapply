@@ -12,6 +12,12 @@ def analyze_resume(request: AnalysisRequest) -> AnalysisResult:
     Retries up to MAX_RETRIES times on transient failures.
     """
     last_error = None
+    if not request.resume.strip():
+        raise InvalidInputError("Resume cannot be empty")
+    if not request.job_description.strip():
+        raise InvalidInputError("Job description cannot be empty")
+    if len(request.resume.strip()) < 50:
+        raise InvalidInputError("Resume is too short to analyze meaningfully")
 
     llm = LLMService()
     for attempt in range(MAX_RETRIES):
